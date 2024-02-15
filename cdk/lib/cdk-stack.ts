@@ -1,7 +1,14 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import {BlockPublicAccess, Bucket} from "aws-cdk-lib/aws-s3";
-import { RemovalPolicy } from 'aws-cdk-lib';
+import {
+  aws_certificatemanager,
+  aws_route53,
+  aws_route53_targets,
+  aws_ssm,
+  aws_systemsmanagersap,
+  RemovalPolicy
+} from 'aws-cdk-lib';
 import {S3Origin} from "aws-cdk-lib/aws-cloudfront-origins";
 import {Distribution, ViewerProtocolPolicy} from "aws-cdk-lib/aws-cloudfront";
 import {BucketDeployment, Source} from "aws-cdk-lib/aws-s3-deployment";
@@ -17,11 +24,25 @@ export class CdkStack extends cdk.Stack {
       bucketName: 'eten-benkhard-nl-react-bucket'
     });
 
+    const certificateArn = aws_ssm.StringParameter.valueForStringParameter(this, '/com/benkhard/wildcard-certificate')
+
+    const certificate = aws_certificatemanager.Certificate.fromCertificateArn(this, 'Certificate', certificateArn)
+
+    const hostedZoneId = aws_ssm.StringParameter.valueForStringParameter(this, '/com/benkhard/public-hosted-zone-id');
+    const zone = aws_route53.HostedZone.fromHostedZoneAttributes(this, 'Zone', {
+      hostedZoneId: hostedZoneId,
+      zoneName: 'benkhard.com'
+    })
+
     const distribution = new Distribution(this, 'CloudfrontDistribution', {
       defaultBehavior: {
         origin: new S3Origin(hostingBucket),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
+      domainNames: [
+          'eten.benkhard.com'
+      ],
+      certificate,
       defaultRootObject: 'index.html',
       errorResponses: [
         {
@@ -39,5 +60,10 @@ export class CdkStack extends cdk.Stack {
       distributionPaths: ['/*'],
     });
 
+    new aws_route53.ARecord(this, "SiteRecord", {
+      recordName: 'eten.benkhard.com',
+      target: aws_route53.RecordTarget.fromAlias(new aws_route53_targets.CloudFrontTarget(distribution)),
+      zone
+    });
   }
 }
