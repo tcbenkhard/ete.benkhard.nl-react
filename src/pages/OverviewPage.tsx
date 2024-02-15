@@ -3,6 +3,9 @@ import './OverviewPage.scss'
 import {MealOverview} from "../components/overview/MealOverview";
 import {Meal} from "../model/meal";
 import {MealDetails} from "../components/MealDetails";
+import {MealsClient} from "../client/MealsClient";
+
+const mealClient = new MealsClient(process.env.REACT_APP_MEALS_BASE_URL!)
 
 export const OverviewPage = () => {
 
@@ -17,27 +20,26 @@ export const OverviewPage = () => {
     );
 
 
-    const [meals, setMeals] = useState<Array<Meal>>([])
+    const [meals, setMeals] = useState<Array<Meal>>()
 
     useEffect(() => {
-        setMeals([
-            {id: 'spaghettibolognese', description: 'Fruit de uitjes en bak daarna de gehakt bruin. Voeg hierna de tomatenpuree toe en laat het even inbakken. Net voor het einde wat pastawater toevoegen om de saus te maken.', name: 'Spaghetti Bolognese', tags: ['pasta', 'italiaans'], ingredients: ['1 ui', 'pasta', '300gr rundergehakt', '1 blikje tomatenpuree']},
-            {id: 'kipkerrie', name: 'Kip kerrie', tags: ['pasta', 'italiaans'], ingredients: ['1 ui', 'pasta', '300gr rundergehakt', '1 blikje tomatenpuree']},
-            {id: 'carbonara', name: 'Carbonara', tags: ['pasta', 'italiaans'], ingredients: ['1 ui', 'pasta', '300gr rundergehakt', '1 blikje tomatenpuree']},
-            {id: 'boerenkool', name: 'Boerenkool', tags: ['pasta', 'italiaans'], ingredients: ['1 ui', 'pasta', '300gr rundergehakt', '1 blikje tomatenpuree']},
-            {id: 'groentesoep', name: 'Groentesoep', tags: ['pasta', 'italiaans'], ingredients: ['1 ui', 'pasta', '300gr rundergehakt', '1 blikje tomatenpuree']},
-            {id: 'kerriesoep', name: 'Kerriesoep', tags: ['pasta', 'italiaans'], ingredients: ['1 ui', 'pasta', '300gr rundergehakt', '1 blikje tomatenpuree']},
-            {id: 'wrapskip', name: 'Wraps met kip', tags: ['pasta', 'italiaans'], ingredients: ['1 ui', 'pasta', '300gr rundergehakt', '1 blikje tomatenpuree']},
-            {id: 'nachosgehakt', name: 'Nachos met gehakt', tags: ['pasta', 'italiaans'], ingredients: ['1 ui', 'pasta', '300gr rundergehakt', '1 blikje tomatenpuree']},
-            {id: 'vitellotonato', name: 'Vitello Tonato', tags: ['pasta', 'italiaans'], ingredients: ['1 ui', 'pasta', '300gr rundergehakt', '1 blikje tomatenpuree']},
-        ])
+        const storedMeals = window.sessionStorage.getItem('meals')
+        if(!storedMeals) {
+            mealClient.getMeals().then((meals) => {
+                window.sessionStorage.setItem('meals', JSON.stringify(meals))
+                setMeals(meals)
+            })
+        } else {
+            setMeals(JSON.parse(storedMeals))
+        }
+
     }, []);
 
 
     return (
         <div id={'overview'}>
             { selectedMeal ? <MealDetails meal={selectedMeal} onCloseDetails={() => setSelectedMeal(undefined)}/> : ''}
-            <MealOverview meals={meals} selectMeal={selectMeal}/>
+            { meals ? <MealOverview meals={meals} selectMeal={selectMeal}/> : <div>Loading...</div>}
         </div>
     )
 }
