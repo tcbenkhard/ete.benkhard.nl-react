@@ -22,7 +22,7 @@ export const MealDetails = ({meal, onCloseDetails}: MealDetailsProps) => {
         <div className={'mealdetail'} onClick={handleCloseClicked}>
             <div className="mealdetail-content" onClick={(e) => e.stopPropagation()}>
                 <div className="mealdetail-content--control">
-                    <a href={'#'} onClick={handleCloseClicked}>close</a>
+                    <button onClick={handleCloseClicked}>close</button>
                 </div>
 
                 <div className="mealdetail-content--body">

@@ -24,6 +24,18 @@
   animation-duration: 250ms;
 
   &-content {
+    & button {
+      background-color: white;
+      border: 0px;
+      font-size: 1em;
+      text-decoration: underline;
+
+      &:hover {
+        color: royalblue;
+        cursor: pointer;
+      }
+    }
+
     @media (max-width: 1000px) {
       width: 100%
     }

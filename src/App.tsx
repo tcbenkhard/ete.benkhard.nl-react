@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import './App.scss';
 import "@fontsource/roboto";
 import {OverviewPage} from "./pages/OverviewPage";
