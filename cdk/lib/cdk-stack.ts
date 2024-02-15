@@ -24,7 +24,7 @@ export class CdkStack extends cdk.Stack {
       bucketName: 'eten-benkhard-nl-react-bucket'
     });
 
-    const certificateArn = aws_ssm.StringParameter.valueForStringParameter(this, '/com/benkhard/wildcard-certificate')
+    const certificateArn = aws_ssm.StringParameter.valueForStringParameter(this, '/com/benkhard/wildcard-certificate-cloudfront')
 
     const certificate = aws_certificatemanager.Certificate.fromCertificateArn(this, 'Certificate', certificateArn)
 
