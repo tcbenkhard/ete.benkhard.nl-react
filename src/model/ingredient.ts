@@ -1,4 +1,4 @@
 export interface Ingredient {
-    displayText: string
+    displayName: string
     query: string
 }
