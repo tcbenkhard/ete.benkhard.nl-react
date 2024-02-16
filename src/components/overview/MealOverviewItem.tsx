@@ -13,7 +13,7 @@ export const MealOverviewItem = ({meal, selectMeal}: MealOverviewItemProps) => {
             </div>
             <div className="overview-item--summary">
                 <div className="overview-item--header">{meal.name}</div>
-                <div className="overview-item--tags">{meal.tags.map(tag => <span className={'tag'}>{tag}</span>)}</div>
+                <div className="overview-item--tags">{meal.tags.map(tag => <span className={'tag'} key={tag}>{tag}</span>)}</div>
             </div>
         </div>
     )

@@ -1,0 +1,35 @@
+.actionmenu {
+  border-radius: 0 0 0.5em 0.5em;
+  display: flex;
+  flex-direction: row;
+  padding: 0.5em;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px -1px rgba(50,50,93,.25), 0 1px 3px -1px rgba(0,0,0,.3);
+
+  &-search {
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    & input {
+      line-height: 2em;
+    }
+  }
+
+  &-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+
+    & button {
+      background-color: #5BC0DE;
+      border: 0px;
+      height: 3em;
+      width: 3em;
+      border-radius: 0.5em;
+
+      &:active {
+        background-color: darken(#5BC0DE, 20%);
+      }
+    }
+  }
+}

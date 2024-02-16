@@ -12,5 +12,8 @@
   }
 
   flex-grow: 1;
-  padding: 1em;
+  padding: 0 1em 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em
 }

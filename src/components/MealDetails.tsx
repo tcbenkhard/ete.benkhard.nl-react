@@ -30,7 +30,7 @@ export const MealDetails = ({meal, onCloseDetails}: MealDetailsProps) => {
                     { meal.description ? <div>{meal.description}</div> : ''}
                     <div>
                         <h2>Ingredienten</h2>
-                        <ul>{meal.ingredients.map(ingr => <li>{ingr}</li>)}</ul>
+                        <ul>{meal.ingredients.map(ingr => <li key={ingr.displayText}>{ingr.displayText}</li>)}</ul>
                     </div>
 
                 </div>

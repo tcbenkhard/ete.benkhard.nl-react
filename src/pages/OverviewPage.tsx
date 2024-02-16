@@ -4,6 +4,7 @@ import {MealOverview} from "../components/overview/MealOverview";
 import {Meal} from "../model/meal";
 import {MealDetails} from "../components/MealDetails";
 import {MealsClient} from "../client/MealsClient";
+import {ActionMenu} from "../components/actionmenu/ActionMenu";
 
 const mealClient = new MealsClient(process.env.REACT_APP_MEALS_BASE_URL!)
 
@@ -39,6 +40,7 @@ export const OverviewPage = () => {
     return (
         <div id={'overview'}>
             { selectedMeal ? <MealDetails meal={selectedMeal} onCloseDetails={() => setSelectedMeal(undefined)}/> : ''}
+            <ActionMenu loggedIn={false} onLoginClicked={() => console.log('Login clicked!')}/>
             { meals ? <MealOverview meals={meals} selectMeal={selectMeal}/> : <div>Loading...</div>}
         </div>
     )
