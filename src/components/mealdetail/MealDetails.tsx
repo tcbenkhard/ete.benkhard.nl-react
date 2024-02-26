@@ -2,7 +2,7 @@ import {Meal} from "../../model/meal";
 import './MealDetails.scss'
 import {useCallback, useContext, useState} from "react";
 import {Dialog} from "../dialog/Dialog";
-import {faCartArrowDown} from "@fortawesome/free-solid-svg-icons";
+import {faList} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {PicnicClientContext} from "../../App";
 import {Ingredient} from "../../model/ingredient";
@@ -63,7 +63,7 @@ export const MealDetails = ({meal, onCloseDetails}: MealDetailsProps) => {
                             {meal.ingredients.map(ingr =>
                                 <li className={'mealdetail-ingredient'} key={ingr.displayName}>
                                     <span className="mealdetail-ingredient--name">{ingr.displayName}</span>
-                                    { picnicClient.isLoggedIn() ? <span className="mealdetail-ingredient--shop" onClick={() => setSelectedIngredient(ingr)}><FontAwesomeIcon icon={faCartArrowDown} /></span> : ''}
+                                    { picnicClient.isLoggedIn() ? <span className="mealdetail-ingredient--shop" onClick={() => setSelectedIngredient(ingr)}><FontAwesomeIcon icon={faList} /></span> : ''}
                                 </li>
                             )}
                         </ul>
