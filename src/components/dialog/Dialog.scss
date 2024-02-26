@@ -1,21 +1,12 @@
-@keyframes fadein {
-  from {opacity: 0;}
-  to {opacity: 100;}
-}
-
-@keyframes fromtop {
-  from {margin-top: -100px}
-  to {margin-top: 0px}
-}
-
-.mealdetail {
-  position: fixed;
+.dialog {
+  position: absolute;
+  visibility: visible;
   background-color: #80808050;
   top: 0;
   left: 0;
   width: 100%;
-  height: 200%;
-  display: inline-flex;
+  min-height: 120%;
+  display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1em;
@@ -39,6 +30,7 @@
     @media (max-width: 1000px) {
       width: 100%
     }
+
     animation: fromtop;
     animation-duration: 200ms;
     opacity: 100%;
@@ -52,24 +44,5 @@
     flex-direction: column;
     justify-content: space-between;
     min-width: 30vw;
-
-    &--body {
-      text-align: left;
-      flex-grow: 1;
-    }
-
-    &--control {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-    }
-
-    &--footer {
-
-    }
-  }
-
-  &--footer {
-
   }
 }

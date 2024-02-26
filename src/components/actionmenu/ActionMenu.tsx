@@ -1,18 +1,23 @@
 import './ActionMenu.scss'
+import {useCallback, useContext, useState} from "react";
+import {PicnicClientContext} from "../../App";
 
 interface ActionMenuProps {
-    loggedIn: boolean
     onLoginClicked: () => void
 }
 
-export const ActionMenu = ({loggedIn, onLoginClicked}: ActionMenuProps) => {
+export const ActionMenu = ({onLoginClicked}: ActionMenuProps) => {
+    const picnicClient = useContext(PicnicClientContext)
+    const [, updateState] = useState<any>();
+    const forceUpdate = useCallback(() => updateState({}), []);
+
     return (
         <div className={'actionmenu'}>
             <div className="actionmenu-search">
                 <input type="text"/>
             </div>
             <div className="actionmenu-buttons">
-                {loggedIn ? <button onClick={onLoginClicked}>X</button> : <button onClick={onLoginClicked}>L</button>}
+                {picnicClient.isLoggedIn() ? <button onClick={() => {picnicClient.logoff(); forceUpdate()}}>X</button> : <button onClick={onLoginClicked}>L</button>}
             </div>
         </div>
     )

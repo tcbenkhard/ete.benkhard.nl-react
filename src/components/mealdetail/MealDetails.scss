@@ -1,0 +1,51 @@
+@keyframes fadein {
+  from {opacity: 0;}
+  to {opacity: 100;}
+}
+
+@keyframes fromtop {
+  from {margin-top: -100px}
+  to {margin-top: 0px}
+}
+
+.mealdetail {
+  &-body {
+    text-align: left;
+    flex-grow: 1;
+  }
+
+  &-ingredients {
+    list-style: none;
+    padding: 0;
+    border: 1px solid black;
+    border-radius: 0.5em;
+  }
+
+  &-ingredient {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 0.5em;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid black;
+    }
+
+    &--name {
+      flex-grow: 1;
+    }
+
+    &--shop {
+    }
+  }
+
+  &-control {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  &-footer {
+
+  }
+}

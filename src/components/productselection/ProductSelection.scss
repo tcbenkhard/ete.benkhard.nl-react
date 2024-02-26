@@ -1,0 +1,26 @@
+.suggestions {
+  & ul {
+    list-style: none;
+    gap: 1em;
+    padding: 0;
+  }
+}
+
+.suggestion {
+
+  &:not(:last-child) {
+    margin-bottom: 0.5em;
+  }
+
+  &-name {
+    text-align: left;
+  }
+
+  &-extra {
+    font-size: 0.85em;
+    color: lighten(black, 20%);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
