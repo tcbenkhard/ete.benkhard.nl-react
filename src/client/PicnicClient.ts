@@ -1,17 +1,11 @@
 import md5Hex from "md5-hex";
-import {types} from "sass";
 
 interface PicnicClientOptions {
     authToken?: string
     baseUrl: string
 }
 
-class PicnicError extends Error {
-
-    constructor(message: string) {
-        super(message);
-    }
-}
+class PicnicError extends Error {}
 
 export interface Product {
     type: string,
