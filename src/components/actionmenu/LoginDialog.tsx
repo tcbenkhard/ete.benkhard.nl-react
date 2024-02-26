@@ -23,7 +23,7 @@ export const LoginDialog = ({onCloseDialog}: LoginDialogProps) => {
                 })
                 .catch((e) => console.log(e))
         },
-        [username, password, onCloseDialog],
+        [username, password, onCloseDialog, picnicClient],
     );
 
     return (
