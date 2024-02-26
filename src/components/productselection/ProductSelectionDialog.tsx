@@ -9,9 +9,10 @@ import './ProductSelection.scss'
 export interface ProductSelectionDialogProps {
     selectedIngredient: Ingredient
     closeDialog: () => void
+    handlePurchase: (product: Product) => void
 }
 
-export const ProductSelectionDialog = ({selectedIngredient, closeDialog}: ProductSelectionDialogProps) => {
+export const ProductSelectionDialog = ({selectedIngredient, closeDialog, handlePurchase}: ProductSelectionDialogProps) => {
     const picnicClient = useContext(PicnicClientContext)
     const [results, setResults] = useState<Array<Product>>([]);
 
@@ -33,7 +34,7 @@ export const ProductSelectionDialog = ({selectedIngredient, closeDialog}: Produc
             <h2>{selectedIngredient.displayName}</h2>
             { results ? <div className="suggestions">
                 <ul>
-                    {results.map(result => <ProductSuggestion product={result} />)}
+                    {results.map(result => <ProductSuggestion handlePurchase={handlePurchase} product={result} />)}
                 </ul>
             </div> : 'Loading...'}
 

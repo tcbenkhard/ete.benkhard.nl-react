@@ -13,6 +13,7 @@ export interface Product {
     name: string,
     display_price: number,
     unit_quantity: string
+    image_id: string
 }
 
 export interface QueryResults {
@@ -81,5 +82,19 @@ export class PicnicClient {
     public isLoggedIn = () => {
         if (this.authToken) return true
         return false
+    }
+
+    public addToCart = async (productId: string) => {
+        const url = `${this.baseUrl}/cart/add_product`
+        await fetch(url, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-picnic-auth': this.authToken!
+            },
+            body: JSON.stringify({
+                product_id: productId, count: 1
+            })
+        })
     }
 }

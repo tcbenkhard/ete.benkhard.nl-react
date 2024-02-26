@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {PicnicClientContext} from "../../App";
 import {Ingredient} from "../../model/ingredient";
 import {ProductSelectionDialog} from "../productselection/ProductSelectionDialog";
+import {Product} from "../../client/PicnicClient";
+import {ConfirmationDialog} from "../dialog/ConfirmationDialog";
 
 
 export interface MealDetailsProps {
@@ -20,6 +22,21 @@ export const MealDetails = ({meal, onCloseDetails}: MealDetailsProps) => {
 
     const [selectedIngredient, setSelectedIngredient] = useState<Ingredient>()
 
+    const [confirmProduct, setConfirmProduct] = useState<Product>()
+
+    const handlePurchaseConfirmed = useCallback(
+        () => {
+            console.log('Buying product ', confirmProduct)
+            picnicClient.addToCart(confirmProduct!.id)
+                .then(() => {
+                    console.log('Added to cart')
+                    setSelectedIngredient(undefined)
+                    setConfirmProduct(undefined)
+                })
+        },
+        [confirmProduct, picnicClient],
+    );
+
     const handleCloseClicked = useCallback(
         (e: React.MouseEvent) => {
             e.stopPropagation()
@@ -28,10 +45,10 @@ export const MealDetails = ({meal, onCloseDetails}: MealDetailsProps) => {
         [onCloseDetails],
     );
 
-
     return (
         <Dialog onClickOutside={onCloseDetails}>
-            { selectedIngredient ? <ProductSelectionDialog selectedIngredient={selectedIngredient} closeDialog={() => {setSelectedIngredient(undefined)}}/> : '' }
+            { selectedIngredient ? <ProductSelectionDialog selectedIngredient={selectedIngredient} closeDialog={() => {setSelectedIngredient(undefined)}} handlePurchase={(product) => setConfirmProduct(product)}/> : '' }
+            { confirmProduct ? <ConfirmationDialog onConfirm={handlePurchaseConfirmed} onCancel={() => setConfirmProduct(undefined)}>Weet je zeker dat je dit product wil kopen?</ConfirmationDialog> : '' }
             <div className="mealdetail" onClick={(e) => e.stopPropagation()}>
                 <div className="mealdetail-control">
                     <button onClick={handleCloseClicked}>close</button>

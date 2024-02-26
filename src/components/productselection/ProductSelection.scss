@@ -7,9 +7,29 @@
 }
 
 .suggestion {
+  display: flex;
+  flex-direction: row;
+
+  &-details {
+    flex-grow: 1;
+  }
+
+  &-buy {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.2em;
+
+    border-radius: 5px;
+    padding: 0em 0.5em;
+    text-align: center;
+  }
 
   &:not(:last-child) {
-    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    border-bottom: 1px solid black;
   }
 
   &-name {
@@ -22,5 +42,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: 1em;
+
+    &--quantity {
+      flex-grow: 1;
+      text-align: left;
+    }
+    &--price {
+      flex-grow: 1;
+      text-align: right;
+    }
   }
 }
